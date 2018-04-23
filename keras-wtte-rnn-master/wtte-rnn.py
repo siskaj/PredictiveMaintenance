@@ -24,9 +24,10 @@ def weibull_loglik_discrete(y_true, ab_pred, name=None):
 
     hazard0 = k.pow((y_ + 1e-35) / a_, b_)
     hazard1 = k.pow((y_ + 1) / a_, b_)
-
+    print('AHOJ')
+    print(-1 * k.mean(u_ * k.log(k.exp(hazard1 - hazard0) - 1.0) - hazard1))
     return -1 * k.mean(u_ * k.log(k.exp(hazard1 - hazard0) - 1.0) - hazard1)
-
+ 
 """
     Not used for this model, but included in case somebody needs it
     For math, see https://ragulpr.github.io/assets/draft_master_thesis_martinsson_egil_wtte_rnn_2016.pdf (Page 35)
@@ -75,7 +76,7 @@ test_y = load_file('test_y.csv')
 
 # Combine the X values to normalize them, then split them back out
 all_x = np.concatenate((train[:, 2:26], test_x[:, 2:26]))
-#all_x = normalize(all_x, axis=0)
+all_x = normalize(all_x, axis=0)
 
 train[:, 2:26] = all_x[0:train.shape[0], :]
 test_x[:, 2:26] = all_x[train.shape[0]:, :]
